@@ -1,6 +1,7 @@
 from flask import Flask
 import os 
 from src.database import init_app, init_db, delete_db
+from src.api import register_routes
 def create_app(
     mode = "development",
     static_path = './static',
@@ -24,8 +25,9 @@ def create_app(
     else:
         app.config['SECRET_KEY'] = os.environ['APP_SECRET_KEY']
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['APP_SQLALCHEMY_DATABASE_URI']
+    app.config['JSON_AS_ASCII'] = False
     init_app(app)
-
+    register_routes(app)
     @app.cli.command("init-db")
     def initialise_database():
         init_db(app)

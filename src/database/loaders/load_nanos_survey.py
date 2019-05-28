@@ -11,23 +11,26 @@ def load_nanos_survey(app: Flask):
         
         mcq_question_type = session.query(QuestionTypeModel).filter_by(type="mcq").one()
         drop_down_question_type = session.query(QuestionTypeModel).filter_by(type="drop_down").one()
-        text = session.query(QuestionTypeModel).filter_by(type="text").one()
-        matrix = session.query(QuestionTypeModel).filter_by(type="matrix").one()
+        text_question_type = session.query(QuestionTypeModel).filter_by(type="text").one()
+        matrix_question_type = session.query(QuestionTypeModel).filter_by(type="matrix").one()
 
 
         survey = SurveyModel(
             title = "Learning Activity Evaluation Questionnaire",
             language = "en",
-            description = """This questionnaire is designed to assess the quality of your learning experience with the Canada School of Public Service. Your responses will help us identify the factors that influence how you apply your learning back in the workplace. This way, learners, departments, and the School can work together to build a stronger government-wide learning culture.
-            The information is being collected under the authority of paragraph 4(f) of the Canada School of Public Service Act and will be stored in the School’s evaluation system. Your personal information is protected under the Privacy Act. For more information, please refer to the School's Privacy Notice."""
+            description = ("This questionnaire is designed to assess the quality of your learning experience with the Canada School of Public Service.\n" +
+                           "Your responses will help us identify the factors that influence how you apply your learning back in the workplace.\n" +
+                           "This way, learners, departments, and the School can work together to build a stronger government-wide learning culture.\n" + 
+                           "The information is being collected under the authority of paragraph 4(f) of the Canada School of Public Service Act and will be stored in the School’s evaluation system.\n"+
+                           "Your personal information is protected under the Privacy Act. For more information, please refer to the School's Privacy Notice.")
         )
 
         session.add(survey)
 
         question_1 = QuestionModel(
             order = 1,
-            question ='''Please rate your overall satisfaction or dissatisfaction with this learning activity on a scale of 1 to 10, 
-            where 1 is "very dissatisfied" and 10 is "very satisfied".''',
+            question =('Please rate your overall satisfaction or dissatisfaction with this learning activity on a scale of 1 to 10,\n'+
+                       'where 1 is "very dissatisfied" and 10 is "very satisfied".'),
             options = {
                 "options": [
                     1,2,3,4,5,6,7,8,9,10
@@ -39,5 +42,37 @@ def load_nanos_survey(app: Flask):
         session.add(question_1)
 
         survey.questions.append(question_1)
+        
+        question_2 = QuestionModel(
+            order = 2,
+            question = "Please tell us why you gave this score.",
+            questionType= text_question_type
+        )
+
+        session.add(question_2)
+
+        survey.questions.append(question_2)
+
+        question_3 = QuestionModel(
+            order = 3,
+            question = ('Please rate your satisfaction or dissatisfaction with the following components of this learning activity on a scale of 1 to 10,\n' +  
+                        'where 1 is "very dissatisfied" and 10 is "very satisfied".'),
+            options = {
+                'Level of detail of the content': [
+                    1,2,3,4,5,6,7,8,9,10,'unsure'
+                ],
+                'Quality of the content': [
+                    1,2,3,4,5,6,7,8,9,10,'unsure'
+                ],
+                'Language quality of the materials (English or French)': [
+                    1,3,4,5,6,7,8,9,10, 'unsure'
+                ]
+            },
+            questionType = matrix_question_type 
+        )
+
+        session.add(question_3)
+
+        survey.questions.append(question_3)
 
         session.commit()

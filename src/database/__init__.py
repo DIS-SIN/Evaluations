@@ -18,7 +18,9 @@ def close_db(e):
 def init_app(app: Flask):
     app.teardown_appcontext(close_db)
     from src.models import init_models
+    from src.marshmallow import init_schemas
     init_models(app)
+    init_schemas(app)
 
 def init_db(app: Flask):
     from src.models.base_model import base
