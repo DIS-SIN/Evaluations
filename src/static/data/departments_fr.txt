@@ -1,0 +1,603 @@
+Administration canadienne de la sûreté du transport aérien
+ACSTA
+
+Administration de pilotage de l'Atlantique Canada
+APA
+
+Administration de pilotage des Grands Lacs Canada
+APGL
+
+Administration de pilotage des Laurentides Canada
+APL
+
+Administration de pilotage du Pacifique Canada
+APP
+
+Administration du pipe-line du Nord Canada
+APN
+
+Affaires autochtones et du Nord Canada
+AANC
+
+Affaires intergouvernementales 
+AIG
+
+Affaires mondiales Canada
+AMC
+
+Agence canadienne d'évaluation environnementale
+ACEE
+
+Agence canadienne d'inspection des aliments
+ACIA
+
+Agence canadienne de développement économique du Nord
+CanNor
+
+Agence canadienne du pari mutuel
+ACPM
+
+Agence de la consommation en matière financière du Canada
+ACFC
+
+Agence de la santé publique du Canada
+ASPC
+
+Agence de promotion économique du Canada atlantique
+APECA
+
+Agence des services frontaliers du Canada
+ASFC
+
+Agence du revenu du Canada
+ARC
+
+Agence fédérale de développement économique pour le Sud de l'Ontario
+FedDev Ontario
+
+Agence spatiale canadienne
+ASC
+
+Agriculture et Agroalimentaire Canada
+AAC
+
+Anciens Combattants Canada
+ACC
+
+Armée canadienne
+AC
+
+Autorité du pont Windsor-Détroit
+APWD
+
+Aviation royale canadienne
+ARC
+
+Banque de développement du Canada
+BDC
+
+Banque du Canada
+
+
+Bibliothèque et Archives Canada
+BAC
+
+Bureau de l'ombudsman de l'approvisionnement
+BOA
+
+Bureau de l'ombudsman de la Défense nationale et des Forces canadiennes
+
+
+Bureau de l'ombudsman des contribuables
+BOC
+
+Bureau de l'ombudsman fédéral des victimes d'actes criminels
+BOFVAC
+
+Bureau de la concurrence Canada
+BUCO
+
+Bureau de la sécurité des transports du Canada
+BST
+
+Bureau de la traduction
+
+
+Bureau du commissaire du Centre de la sécurité des télécommunications
+BCCST
+
+Bureau du Conseil privé
+BCP
+
+Bureau du surintendant des faillites Canada
+BSF
+
+Bureau du surintendant des institutions financières Canada
+BSIF
+
+Bureau du vérificateur général du Canada
+BVG
+
+Centre canadien d'hygiène et de sécurité au travail
+CCHST
+
+Centre d'analyse des opérations et déclarations financières du Canada
+CANAFE
+
+Centre de la sécurité des télécommunications Canada
+CSTC
+
+Centre de recherches pour le développement international
+CRDI
+
+Centre de recherches sur les communications Canada
+CRC
+
+Centre des armes à feu Canada
+CAFC
+
+Centre national des arts
+CNA
+
+Chaires de recherche du Canada
+
+
+Collège canadien de police
+CCP
+
+Collège militaire royal du Canada
+CMRC
+
+Comité de surveillance des activités de renseignement de sécurité
+CSARS
+
+Comité externe d'examen de la Gendarmerie royale du Canada
+CEE
+
+Comité externe d'examen des griefs militaires
+CEEGM
+
+Commandement des Forces d’opérations spéciales du Canada
+COMFOSCAN
+
+Commissariat à l'information au Canada
+CI
+
+Commissariat à l'intégrité du secteur public du Canada
+ISPC
+
+Commissariat à la magistrature fédérale Canada
+CMF
+
+Commissariat à la protection de la vie privée du Canada
+CPVP
+
+Commissariat au lobbying du Canada
+CAL
+
+Commissariat aux conflits d'intérêts et à l'éthique
+CCIE
+
+Commissariat aux langues officielles
+CLO
+
+Commission canadienne d'examen des exportations de biens culturels
+
+
+Commission canadienne de sûreté nucléaire
+CCSN
+
+Commission canadienne des droits de la personne
+CCDP
+
+Commission canadienne des grains
+CCG
+
+Commission canadienne du lait
+CCL
+
+Commission civile d'examen et de traitement des plaintes relatives à la GRC
+CCETP
+
+Commission d'examen des plaintes concernant la police militaire du Canada
+CPPM
+
+Commission de l'assurance-emploi du Canada
+CAEC
+
+Commission de l'immigration et du statut de réfugié du Canada
+CISR
+
+Commission de la capitale nationale
+CCN
+
+Commission de la fonction publique du Canada
+CFP
+
+Commission de révision agricole du Canada
+CRAC
+
+Commission des champs de bataille nationaux
+CCBN
+
+Commission des libérations conditionnelles du Canada
+CLCC
+
+Commission des lieux et monuments historiques du Canada
+CLMHC
+
+
+Commission des relations de travail et de l'emploi dans la fonction publique
+CRTEFP
+
+Commission du droit d'auteur Canada
+CDA
+
+Commission indépendante d’examen des acquisitions de la Défense
+CIEAD
+
+Condition féminine Canada
+CFC
+
+Conseil canadien de la magistrature
+CCM
+
+Conseil canadien des normes
+SCC-CCN
+
+Conseil canadien des relations industrielles
+CCRI
+
+Conseil d'examen du prix des médicaments brevetés Canada
+CEPMB
+
+Conseil de la radiodiffusion et des télécommunications canadiennes
+CRTC
+
+Conseil de recherches en sciences et en génie Canada
+CRSNG
+
+Conseil de recherches en sciences humaines du Canada
+CRSH
+
+Conseil des arts du Canada
+
+
+Conseil des produits agricoles du Canada
+CPAC
+
+Conseil national de recherches Canada
+CNRC
+
+Conseil national des aînés
+
+
+Construction de Défense Canada
+CDC
+
+CORCAN
+
+
+Corporation commerciale canadienne
+CCC
+
+Corporation de développement des investissements du Canada
+CDEV
+
+Cour canadienne de l'impôt
+CCI
+
+Cour d'appel de la cour martiale du Canada
+CACM
+
+Cour d'appel fédérale
+CAF
+
+Cour fédérale
+CF
+
+Cour suprême du Canada
+CSC
+
+Défense nationale
+MDN
+
+Destination Canada
+DC
+
+Développement économique Canada pour les régions du Québec
+DEC
+
+Diversification de l'économie de l'Ouest Canada
+DEO
+
+École de la fonction publique du Canada
+EFPC
+
+Élections Canada
+Élections
+
+Emploi et Développement social Canada
+EDSC
+
+Énergie atomique du Canada, Limitée
+EACL
+
+Enquêteur correctionnel Canada
+BEC
+
+Environnement et Changement climatique Canada
+ECCC
+
+Exportation et développement Canada
+EDC
+
+Financement agricole Canada
+FAC
+
+Finances Canada, Ministère des
+FIN
+
+Fondation canadienne des relations raciales
+FCRR
+
+Garde côtière canadienne
+GCC
+
+Gendarmerie royale du Canada
+GRC
+
+Gouverneur général du Canada
+BSGG
+
+Greffe du Tribunal des revendications particulières du Canada
+TRP
+
+Immigration, Réfugiés et Citoyenneté Canada
+IRCC
+
+Infrastructure Canada
+INFC
+
+Innovation, Sciences et Développement économique Canada
+ISDE
+
+Institut canadien de conservation
+ICC
+
+Institutions démocratiques
+
+
+Instituts de recherche en santé du Canada
+IRSC
+
+Jeunesse
+JEUNESSE
+
+Justice Canada, Ministère de la
+JUS
+
+Le cabinet du juge militaire en chef
+CJMC
+
+Leader du gouvernement à la Chambre des communes
+
+
+Marine Atlantique
+MarineAtlantique
+
+Marine royale canadienne
+MRC
+
+Mesures Canada
+MC
+
+Monnaie royale canadienne
+Monnaie
+
+Musée canadien de l'histoire
+MCH
+
+Musée canadien de l'immigration du Quai 21
+MCIQ
+
+Musée canadien de la guerre
+
+
+Musée canadien de la nature
+MCN
+
+Musée canadien pour les droits de la personne
+MCDP
+
+Musée de l'agriculture et de l'alimentation du Canada
+
+
+Musée de l'aviation et de l'espace du Canada
+
+
+Musée de la Banque du Canada
+
+
+Musée des beaux-arts du Canada
+MBAC
+
+Musée des sciences et de la technologie du Canada
+
+
+Musée virtuel du Canada
+MVC
+
+Office d'investissement des régimes de pensions du secteur public
+Investissements PSP
+
+Office d'investissement du régime de pensions du Canada
+OIRPC
+
+Office de commercialisation du poisson d'eau douce
+OCPED
+
+Office de la propriété intellectuelle du Canada
+OPIC
+
+Office des technologies industrielles
+OTI
+
+Office des transports du Canada
+OTC
+
+Office national de l'énergie
+ONE
+
+Office national du film
+ONF
+
+Ombudsman des vétérans
+
+
+Parcs Canada
+PC
+
+Parlement du Canada
+
+
+Patrimoine canadien
+PCH
+
+Pêches et Océans Canada
+MPO
+
+Pétrole et gaz des Indiens du Canada
+
+
+Pont Blue Water Canada
+PBW
+
+Ponts Jacques-Cartier et Champlain
+PJCCI
+
+Postes Canada
+SCP
+
+Premier ministre du Canada
+
+
+Programme du travail
+
+
+Radio Canada
+Radio-Canada
+
+Recherche et développement pour la Défense Canada
+RDDC
+
+Relations Couronne-Autochtones et Affaires du Nord Canada
+RCAANC
+
+Réseau canadien d'information sur le patrimoine
+RCIP
+
+Ressources naturelles Canada
+RNCan
+
+Révision de la protection de l'environnement Canada
+RPEC
+
+Ridley Terminals Inc.
+
+
+Santé Canada
+SC
+
+Savoir polaire Canada
+POLAIRE
+
+Secrétariat des conférences intergouvernementales canadiennes
+SCIC
+
+Secrétariat du Comité des parlementaires sur la sécurité nationale et le renseignement
+CPSNR
+
+Secrétariat du Conseil du Trésor du Canada
+SCT
+
+Sécurité publique Canada
+SP
+
+Service administratif des tribunaux judiciaires
+SATJ
+
+Service Canada
+ServCan
+
+Service canadien d'appui aux tribunaux administratifs
+SCDATA
+
+Service canadien du renseignement de sécurité
+SCRS
+
+Service correctionnel Canada
+SCC
+
+Service des délégués commerciaux du Canada
+SDC
+
+Service des poursuites pénales du Canada
+SPPC
+
+Services aux Autochtones Canada
+SAC
+
+Services partagés Canada
+SPC
+
+Services publics et Approvisionnement Canada
+SPAC
+
+Société canadienne d'hypothèques et de logement
+SCHL
+
+Société d'assurance-dépôts du Canada
+SADC
+
+Société des ponts fédéraux
+SPFL
+
+Société immobilière du Canada Limitée
+SIC
+
+Statistique Canada
+StatCan
+
+Téléfilm Canada
+
+
+Transports Canada
+TC
+
+Tribunal canadien du commerce extérieur
+TCCE
+
+Tribunal d'appel des transports du Canada
+TATC
+
+Tribunal de la concurrence
+
+
+Tribunal de la protection des fonctionnaires divulgateurs Canada
+TPFDC
+
+Tribunal de la sécurité sociale du Canada
+TSS
+
+Tribunal de santé et sécurité au travail Canada
+TSSTC
+
+Tribunal des anciens combattants (révision et appel)
+TACRA
+
+Tribunal des droits de la personne du Canada
+TDPC
+
+VIA Rail Canada
+VIA Rail
