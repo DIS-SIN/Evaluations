@@ -22,7 +22,7 @@ def init_app(app: Flask):
     init_models(app)
     init_schemas(app)
 
-def init_db(app: Flask):
+def init_db(app: Flask, mode: str):
     from src.models.base_model import base
     base.create_all()
     from .loaders.load_question_types import load_question_types
@@ -37,6 +37,9 @@ def init_db(app: Flask):
     load_classifications(app)
     load_regions(app)
     load_nanos_survey(app)
+    if mode == "development":
+        from .loaders.load_dummy_respondants import load_dummy_respondants
+        load_dummy_respondants(app)
 
 def delete_db():
     from src.models.base_model import base

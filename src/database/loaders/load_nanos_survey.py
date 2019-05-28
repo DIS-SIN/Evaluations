@@ -24,7 +24,8 @@ def load_nanos_survey(app: Flask):
                            "The information is being collected under the authority of paragraph 4(f) of the Canada School of Public Service Act and will be stored in the School’s evaluation system.\n"+
                            "Your personal information is protected under the Privacy Act. For more information, please refer to the School's Privacy Notice.")
         )
-
+        
+        survey.set_slug(session)
         session.add(survey)
 
         question_1 = QuestionModel(
@@ -52,27 +53,5 @@ def load_nanos_survey(app: Flask):
         session.add(question_2)
 
         survey.questions.append(question_2)
-
-        question_3 = QuestionModel(
-            order = 3,
-            question = ('Please rate your satisfaction or dissatisfaction with the following components of this learning activity on a scale of 1 to 10,\n' +  
-                        'where 1 is "very dissatisfied" and 10 is "very satisfied".'),
-            options = {
-                'Level of detail of the content': [
-                    1,2,3,4,5,6,7,8,9,10,'unsure'
-                ],
-                'Quality of the content': [
-                    1,2,3,4,5,6,7,8,9,10,'unsure'
-                ],
-                'Language quality of the materials (English or French)': [
-                    1,3,4,5,6,7,8,9,10, 'unsure'
-                ]
-            },
-            questionType = matrix_question_type 
-        )
-
-        session.add(question_3)
-
-        survey.questions.append(question_3)
 
         session.commit()

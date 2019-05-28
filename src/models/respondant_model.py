@@ -3,12 +3,14 @@ from .base_model import base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.sql import func
+from src.utils.slug_generator import generate_slug
 
 class RespondantModel(base.Model):
     __tablename__ = "respondants"
     id = base.Column(base.Integer, primary_key = True)
     classification = base.Column(base.Text, nullable = False)
     addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
+    slug = base.Column(base.Text, nullable = False, unique = True)
     departmentId = base.Column(
         base.Integer, 
         base.ForeignKey(
@@ -57,6 +59,14 @@ class RespondantModel(base.Model):
         ),
         uselist= False
     )
+    def __init__(self, session = None, *args, **kwargs):
+        if session is not None:
+            self.set_slug(session)
+        super(RespondantModel, self).__init__(*args, **kwargs)
+    def set_slug(self, session):
+        self.slug = generate_slug('respondant', RespondantModel, session)
+ 
+
 
 
 

@@ -30,7 +30,7 @@ def create_app(
     register_routes(app)
     @app.cli.command("init-db")
     def initialise_database():
-        init_db(app)
+        init_db(app, mode)
     @app.cli.command("delete-db")
     def wipe_database():
         delete_db()
