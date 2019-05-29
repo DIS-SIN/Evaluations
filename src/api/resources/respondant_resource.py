@@ -10,6 +10,7 @@ from src.models.regions_model import RegionModel
 from src.models.classification_model import ClassificationModel
 from src.models.survey_model import SurveyModel
 from src.models.conductedSurvey_model import ConductedSurveyModel
+from src.marshmallow.conductedSurvey_schema import ConductedSurveySchema
 
 class RespondantResource(Resource):
     
@@ -152,7 +153,8 @@ class RespondantResource(Resource):
         session.add(conducted_survey_model)
         session.commit()
 
-        return {}, 200 
+        conducted_survey_dump = ConductedSurveySchema().dump(conducted_survey_model).data
+        return conducted_survey_dump, 200 
        
 
         

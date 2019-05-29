@@ -4,6 +4,8 @@ from src.marshmallow.survey_schema import SurveySchema
 from src.database import get_db
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from marshmallow import ValidationError
+from src.models.conductedSurvey_model import ConductedSurveyModel
+from flask import request
 class SurveyResource(Resource):
     def get(self, id = None, slug = None):
         session = get_db()
@@ -56,4 +58,34 @@ class SurveyResource(Resource):
                 dumped_surveys.append(SurveySchema().dump(survey).data)
             return dumped_surveys, 200
         return {}, 200
+    def post(self):
+        json = request.get_json()
+        session = get_db()
+        if json is None:
+            return {
+                'error': "JSON not submitted"
+            }, 400
+        if json.get("conductedSurveyId") is None:
+            return {
+                "error": "Must submit ConductedSurveyId"
+            }, 400
+        else:
+            conducted_survey = session.query(ConductedSurveyModel).filter_by(
+                id = json.get("conductedSurveyId")
+            ).one_or_none()
+            if conducted_survey is None:
+                return {
+                    "error": "No conducted survey with id " + json.get("conductedSurveyId")
+                }, 400
+        
+        if json.get("questions") is None:
+            return {
+                "error": "questions cannot be none"
+            }
+            
+
+
+        
+
+
 

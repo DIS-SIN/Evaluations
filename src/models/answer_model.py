@@ -17,6 +17,6 @@ class AnswerModel(base.Model):
     )
     conductedSurveyQuestion = relationship(
         'ConductedSurveyModelQuestions',
-        backref="answers"
+        backref="answer"
     )
     

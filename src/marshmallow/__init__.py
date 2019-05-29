@@ -8,3 +8,8 @@ def init_schemas(app: Flask):
     from .department_schema import DepartmentSchema
     from .regions_schema import RegionSchema
     from .respondant_schema import RespondantSchema
+    from .answer_schema import AnswerSchema
+    from .conductedSurvey_schema import (
+        ConductedSurveySchema,
+        ConductedSurveyModelQuestionsSchema
+    )
