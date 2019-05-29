@@ -13,3 +13,4 @@ def init_schemas(app: Flask):
         ConductedSurveySchema,
         ConductedSurveyModelQuestionsSchema
     )
+    from .surveySchemaless_schema import SurveySchemalessSchema
