@@ -1,5 +1,5 @@
 from .base_model import base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 class AnswerModel(base.Model):
     __tablename__="answers"
@@ -17,6 +17,10 @@ class AnswerModel(base.Model):
     )
     conductedSurveyQuestion = relationship(
         'ConductedSurveyModelQuestions',
-        backref="answer"
+        backref=backref(
+            "answer",
+            uselist = False
+        ),
+        uselist= False
     )
     

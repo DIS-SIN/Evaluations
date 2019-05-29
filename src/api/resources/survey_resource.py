@@ -5,6 +5,9 @@ from src.database import get_db
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from marshmallow import ValidationError
 from src.models.conductedSurvey_model import ConductedSurveyModel
+from src.models.status_model import StatusModel
+from src.models.answer_model import AnswerModel
+from src.marshmallow.conductedSurvey_schema import ConductedSurveySchema
 from flask import request
 class SurveyResource(Resource):
     def get(self, id = None, slug = None):
@@ -82,6 +85,44 @@ class SurveyResource(Resource):
             return {
                 "error": "questions cannot be none"
             }
+        else:
+            questions_registry  = {}
+            for question in conducted_survey.conductedSurveyModelQuestions:
+                questions_registry[question.questionId] = question
+
+            for question in json.get("questions"):
+                id = question.get("questionId")
+                if  id is None:
+                    return {
+                        "error": "Must provide question id for all questions"
+                    }
+                elif questions_registry.get(id) is None:
+                    return {
+                        "error": f"questionId {id} does not exist in this conducted survey"
+                    }
+                answer = question.get("answer")
+                question = questions_registry.get(id)
+                if question.answer is None:
+                    answer_row = AnswerModel(
+                       answer = answer
+                    )
+                    print(answer_row)
+
+                    question.answer = answer_row
+                else:
+                    question.answer.answer = answer
+            
+            closed = session.query(StatusModel).filter_by(
+                status = "closed"
+            ).one()
+            conducted_survey.status = closed
+            session.commit()
+            conducted_survey_dump = ConductedSurveySchema().dump(conducted_survey).data
+            return conducted_survey_dump, 200
+
+
+
+
             
 
 
