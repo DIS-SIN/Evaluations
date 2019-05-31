@@ -23,4 +23,6 @@
             * radio
             * text
 * randomization of questions
-* celery processes to calculate sentiment and prepare the single level key value pair for the conducted survey answers       
+* celery processes to calculate sentiment and prepare the single level key value pair for the conducted survey answers  
+* query registhor for classifications, departments and offerings 
+* API helper functions to reduce some bioler plate    
