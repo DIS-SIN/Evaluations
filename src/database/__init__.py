@@ -1,6 +1,8 @@
 
 from flask import Flask, g
-def get_db():
+from sqlalchemy.orm.session import Session
+
+def get_db() -> Session:
     from src.models.base_model import base
     if "scoped_session" not in g:
         g.scoped_session = base.session

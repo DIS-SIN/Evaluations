@@ -25,4 +25,5 @@
 * randomization of questions
 * celery processes to calculate sentiment and prepare the single level key value pair for the conducted survey answers  
 * query registhor for classifications, departments and offerings 
-* API helper functions to reduce some bioler plate    
+* API helper functions to reduce some bioler plate
+* From the classifications. get the base classification and the levels

@@ -4,12 +4,15 @@ from src.database import init_app, init_db, delete_db
 from src.api import register_routes
 from src.views import register_views
 from flask_cors import CORS
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 def create_app(
     mode = "development",
     static_path = './static',
     templates_path = './templates'
     ) -> Flask:
     app = Flask(__name__)
+    
     CORS(app)
     if os.path.isdir(static_path):
         app.static_folder = os.path.abspath(static_path)

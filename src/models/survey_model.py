@@ -42,7 +42,12 @@ class SurveyModel(base.Model):
         passive_deletes = True,
         cascade="all, delete-orphan"
     )
-    
+    def __init__(self, session = None, *args, **kwargs):
+        super(SurveyModel, self).__init__(*args,**kwargs)
+        if session is not None:
+            self.set_slug(session)
+
+
     def set_slug(self, session):
         self.slug = generate_slug('survey', SurveyModel, session)
     

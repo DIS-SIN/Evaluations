@@ -1,5 +1,5 @@
 from flask import Flask
-def init_schemas(app: Flask):
+def init_dump_schemas(app: Flask):
     from .base_schema import schema
     schema.init_app(app)
     from .survey_schema import SurveySchema
