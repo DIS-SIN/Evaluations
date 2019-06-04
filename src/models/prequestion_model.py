@@ -24,3 +24,15 @@ class PreQuestionModel(base.Model):
         "SurveyModel",
         back_populates="preQuestions",
     )
+
+    questions = relationship(
+        "QuestionModel",
+        back_populates="preQuestions",
+        cascade="all, delete-orphan"
+    )
+
+    def set_order(self, order):
+        if self.survey is None:
+            raise ValueError("PreQuestion has not yet been added to a survey. This must happen before assigning an order")
+        else:
+            self.survey.set_item_order(order, prequestion = self)

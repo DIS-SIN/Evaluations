@@ -71,6 +71,23 @@ class SurveyModel(base.Model):
         self.conductedSurveys.append(conducted_survey)
         return conducted_survey
     
+    def set_item_order(self, order, **kwargs):
+        if bool(self.order_registry) is False:
+            self.order_registry = {}
+            self.item_count = 0
+            for prequestion in self.preQuestions:
+                if prequestion.order is not None:
+                    self.order_registry[prequestion.order] = prequestion
+                self.item_count += 1
+            for question in self.questions:
+                if question.order is not None:
+                    self.order_registry[question.order] = question
+                self.item_count += 1 
+        
+        if order < 1 or order > self.item_count:
+            raise IndexError("You have specified an order which is out of bound from the index of 1 to " + str(self.item_count))
+
+    
 
         
 

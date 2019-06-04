@@ -13,6 +13,7 @@ class QuestionModel(base.Model):
     options = base.Column(JSONB)
     addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
     questionKey = base.Column(base.Text, nullable = False)
+    
     surveyId = base.Column(base.Integer,
                            base.ForeignKey(
                                'surveys.id',
@@ -20,6 +21,24 @@ class QuestionModel(base.Model):
                                 onupdate = "CASCADE"
                            )
                         )
+    survey = relationship(
+        'SurveyModel',
+        back_populates = "questions"
+    )
+
+    preQuestionId = base.Column(
+        base.Integer,
+        base.ForeignKey(
+            "prequestions.id",
+            ondelete="CASCADE",
+            onupdate="CASCADE"
+        )
+    )
+    preQuestions = relationship(
+        "PreQuestionModel",
+        back_populates="questions"
+    )
+
     typeId = base.Column(
         base.Integer,
         base.ForeignKey(
@@ -28,15 +47,12 @@ class QuestionModel(base.Model):
             onupdate = "CASCADE"
         )
     )
-    survey = relationship(
-        'SurveyModel',
-        back_populates = "questions"
-    )
-    conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')
     questionType = relationship(
         "QuestionTypeModel",
         backref="questions"
     )
+
+    conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')
 
 
 
