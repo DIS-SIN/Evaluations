@@ -4,13 +4,17 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.associationproxy import association_proxy
 from src.utils.slug_generator import generate_slug
 import src.models.status_model as stm
+import hashlib
+from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSONB
 
 class ConductedSurveyModel(base.Model):
     __tablename__ = "conducted_surveys"
     id = base.Column(base.Integer, primary_key = True)
-    addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
+    addedOn = base.Column(base.DateTime, server_default = func.now())
     questions = association_proxy("conductedSurveyModelQuestions", 'question')
     slug = base.Column(base.Text, nullable = False, unique = True)
+    surveyHash = base.Column(base.Text, nullable = False, unique = True)
     statusId = base.Column(base.Integer, base.ForeignKey(
         'status_refrence.id',
          ondelete = "SET NULL",
@@ -51,6 +55,7 @@ class ConductedSurveyModel(base.Model):
     )
     sentimentScore = base.Column(base.Float(2))
     magnitudeScore = base.Column(base.Float(2))
+
     
     def __init__(self, session = None, *args, **kwargs):
         if session is not None:
@@ -63,6 +68,20 @@ class ConductedSurveyModel(base.Model):
         self.status = session.query(stm.StatusModel).filter_by(
             status="active"
         ).one()
+    def set_survey_hash(self, session = None):
+        if self.slug is None:
+            if self.session is None:
+                raise ValueError("session is required to initialise slug which feeds the hash")
+            else:
+                self.set_slug(session)
+
+        hash_datetime = self.addedOn or datetime.utcnow()
+        hash_datetime = bytes(str(hash_datetime), encoding = "utf-8")
+
+        hash = hashlib.sha1()
+        hash.update(hash_datetime)
+        hash.update(self.slug)
+        self.surveyHash = hash.hexdigest()
 
 
 class ConductedSurveyModelQuestions(base.Model):
@@ -85,7 +104,7 @@ class ConductedSurveyModelQuestions(base.Model):
         )
     )
     
-    addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
+    addedOn = base.Column(base.DateTime, server_default = func.now())
     conductedSurvey = relationship(
         'ConductedSurveyModel',
          backref= backref(

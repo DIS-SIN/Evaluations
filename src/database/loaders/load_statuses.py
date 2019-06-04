@@ -7,13 +7,16 @@ def load_statuses(app: Flask):
         session = get_db()
 
         active = StatusModel(
-            status="active"
+            status="active",
+            category="CONDUCTED_SURVEY"
         )
         closed = StatusModel(
-            status="closed"
+            status="closed",
+            category="CONDUCTED_SURVEY"
         )
         processing = StatusModel(
-            status = "processing"
+            status = "processing",
+            category="CONDUCTED_SURVEY"
         )
 
         session.add(active)

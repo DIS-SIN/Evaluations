@@ -13,7 +13,8 @@ else:
 app = create_app( 
     mode,
     static_path= 'src/static',
-    templates_path= 'src/templates'
+    templates_path= 'src/templates',
+    instance_path= 'src/instance'
 )
 
 if __name__ == "__main__":

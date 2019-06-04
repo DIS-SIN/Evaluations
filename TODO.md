@@ -1,13 +1,13 @@
 # TODO
 
-* Create marshmallow schemas responsible for deserializing JSON from the API to sqlalchemy objects. Seperating the schemas for loading and dumping will reduce complexity and create a unidirectional data flow from the API to the database and back
+* Create marshmallow schemas responsible for deserializing JSON from the API to sqlalchemy objects. Seperating the schemas for loading and dumping will reduce complexity and create a unidirectional data flow from the API to the database and back [IN PROGRESS]
 * Complete sqlalchemy class definitions for the tables in the database
-    * Survey Table:
-        * take out the logic to create a conducted survey from the model to the marshmallow loader
-        * create adjacency relationship such that relationships between surveys can be captured
+    * Survey Table: [DONE]
+        * take out the logic to create a conducted survey from the model to the marshmallow loader [DONE]
+        * create adjacency relationship such that relationships between surveys can be captured [DONE]
     * Conducted Survey Table:
-        * Create hash for the conducted survey which only the respondant will have access to and so can reaccess the conducted survey if they wish to continue later (QR code ??)
-        * Add JSONB field for single level key value pairs for the results of the survey. (For dashboards)
+        * Create hash for the conducted survey which only the respondant will have access to and so can reaccess the conducted survey if they wish to continue later (QR code ??) [DONE]
+        * Add JSONB field for single level key value pairs for the results of the survey. (For dashboards) [DONE]
     * Conducted Question Table:
         * create field for the single level key value pair for the survey
         * create adjacency relationship such that relationships between questions can be captured i.e. parent question 
@@ -27,3 +27,5 @@
 * query registhor for classifications, departments and offerings 
 * API helper functions to reduce some bioler plate
 * From the classifications. get the base classification and the levels
+* Integrate with sentry DONE
+* allow the switching on or off of sentiment anlysis based on the availability of credentials DONE

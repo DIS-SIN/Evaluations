@@ -8,9 +8,11 @@ class QuestionModel(base.Model):
     __tablename__ = "questions"
     id = base.Column(base.Integer, primary_key = True)
     order = base.Column(base.Integer)
+    randomize = base.Column(base.Boolean, default = False)
     question = base.Column(base.Text, nullable = False)
     options = base.Column(JSONB)
     addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
+    questionKey = base.Column(base.Text, nullable = False)
     surveyId = base.Column(base.Integer,
                            base.ForeignKey(
                                'surveys.id',

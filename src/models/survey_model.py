@@ -2,6 +2,8 @@ from sqlalchemy.orm import relationship
 from .base_model import base
 from src.utils.slug_generator import generate_slug
 import src.models.conductedSurvey_model as csm
+from sqlalchemy.sql import func
+
 class SurveyModel(base.Model):
     __tablename__ = "surveys"
     id = base.Column(
@@ -19,6 +21,11 @@ class SurveyModel(base.Model):
     language = base.Column(
         base.Text
     )
+    addedOn = base.Column(
+        base.DateTime,
+        server_default = func.now(),
+        onupdate = func.now()
+    )
     otherLanguageId = base.Column(
         base.Integer,
         base.ForeignKey(
@@ -30,6 +37,11 @@ class SurveyModel(base.Model):
     otherLanguage = relationship(
         'SurveyModel',
         uselist= False
+    )
+    preQuestions = relationship(
+        "PreQuestionModel",
+        back_populates="survey",
+        cascade="all, delete-orphan"
     )
     questions = relationship(
         'QuestionModel',
@@ -58,6 +70,8 @@ class SurveyModel(base.Model):
             conducted_survey.questions.append(question)
         self.conductedSurveys.append(conducted_survey)
         return conducted_survey
+    
+
         
 
 
