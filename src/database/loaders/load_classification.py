@@ -1630,8 +1630,33 @@ def load_classifications(app: Flask):
         session = get_db()
 
         for cl in CLASSIFICATIONS:
-            clobj = ClassificationModel(
-                classification = cl
-            )
-            session.add(clobj)
+            class_array = cl.split("-")
+            if len(class_array) == 1:
+                base_class = class_array[0].strip()
+                classobj = session.query(ClassificationModel).filter_by(classification = base_class).first()
+                if classobj is None:
+                    classobj = ClassificationModel(classification=base_class)
+                    session.add(classobj)
+            elif len(class_array) == 2:
+                base_class = class_array[0].strip()
+                try:
+                    level = int(class_array[1])
+                    
+                except ValueError:
+                    level = None # type: ignore
+                
+                if level is None:
+                    classobj = session.query(ClassificationModel).filter_by(classification = base_class).first()
+                    if classobj is None:
+                        classobj = ClassificationModel(classification = base_class)
+                else:
+                    classobj = session.query(ClassificationModel).filter_by(
+                        classification = base_class,
+                        level = level
+                    ).one_or_none()
+                    if classobj is None:
+                        classobj = ClassificationModel(classification = base_class, level = level)
+                        session.add(classobj)
+                    else:
+                        print(class_array)
         session.commit()

@@ -1,9 +1,10 @@
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from .base_model import base
 from src.utils.slug_generator import generate_slug
 import src.models.conductedSurvey_model as csm
 from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import ForeignKey
 
 class SurveyModel(base.Model):
     __tablename__ = "surveys"
@@ -28,6 +29,19 @@ class SurveyModel(base.Model):
         server_default = func.now(),
         onupdate = func.now()
     )
+
+    statusId = base.Column(
+        base.Integer,
+        ForeignKey(
+            "survey_status_refrence.id",
+            ondelete= "SET NULL",
+            onupdate="CASCADE"
+        )
+    )
+    status = relationship(
+        "SurveyStatusModel"
+    )
+
     otherLanguageId = base.Column(
         base.Integer,
         base.ForeignKey(
@@ -40,6 +54,7 @@ class SurveyModel(base.Model):
         'SurveyModel',
         uselist= False
     )
+
     sections = relationship(
         "SectionModel",
         back_populates="survey",
@@ -56,6 +71,7 @@ class SurveyModel(base.Model):
         passive_deletes = True,
         cascade="all, delete-orphan"
     )
+    
     def __init__(self, session = None, *args, **kwargs):
         super(SurveyModel, self).__init__(*args,**kwargs)
         if session is not None:

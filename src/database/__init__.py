@@ -32,16 +32,12 @@ def init_db(app: Flask, mode: str):
     from .loaders.load_departments import load_departments
     from .loaders.load_classification import load_classifications
     from .loaders.load_regions import load_regions
-    from .loaders.load_nanos_survey import load_nanos_survey
     load_question_types(app)
     load_statuses(app)
     load_departments(app)
     load_classifications(app)
     load_regions(app)
-    load_nanos_survey(app)
-    if mode == "development":
-        from .loaders.load_dummy_respondants import load_dummy_respondants
-        load_dummy_respondants(app)
+    
 
 def delete_db():
     from src.models.base_model import base

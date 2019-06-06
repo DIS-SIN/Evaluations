@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.associationproxy import association_proxy
 from src.utils.slug_generator import generate_slug
-import src.models.status_model as stm
+import src.models.conductedSurvey_model as ctm
 import hashlib
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import JSONB
@@ -16,12 +16,12 @@ class ConductedSurveyModel(base.Model):
     slug = base.Column(base.Text, nullable = False, unique = True)
     surveyHash = base.Column(base.Text, nullable = False, unique = True)
     statusId = base.Column(base.Integer, base.ForeignKey(
-        'status_refrence.id',
+        'conducted_survey_status_refrence.id',
          ondelete = "SET NULL",
          onupdate = "CASCADE"
     ))
     status = relationship(
-        'StatusModel',
+        'ConductedSurveyStatusModel',
         backref= "conductedSurveys"
     )
     respondantId = base.Column(
@@ -62,10 +62,11 @@ class ConductedSurveyModel(base.Model):
             self.set_slug(session)
             self.set_status(session)
         super(ConductedSurveyModel, self).__init__(*args, **kwargs)
+    
     def set_slug(self, session):
         self.slug = generate_slug('conductedSurvey', ConductedSurveyModel, session)
     def set_status(self, session):
-        self.status = session.query(stm.StatusModel).filter_by(
+        self.status = session.query(ctm.ConductedStatusModel).filter_by(
             status="active"
         ).one()
     def set_survey_hash(self, session = None):

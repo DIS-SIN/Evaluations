@@ -47,9 +47,9 @@ class QuestionModel(base.Model):
             onupdate = "CASCADE"
         )
     )
-    questionType = relationship(
-        "QuestionTypeModel",
-        backref="questions"
+
+    type = relationship(
+        "QuestionTypeModel"
     )
 
     conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')
