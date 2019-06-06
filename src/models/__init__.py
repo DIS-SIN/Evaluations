@@ -13,6 +13,7 @@ def init_models(app: Flask) -> None:
     from .questions_model import QuestionModel
     from .questionTypes_model import QuestionTypeModel
     from .survey_model import SurveyModel
+    from .section_model import SectionModel
     from .status_model import StatusModel
     from .conductedSurvey_model import ConductedSurveyModel, ConductedSurveyModelQuestions
     from .surveySchemaless_model import SurveySchemalessModel

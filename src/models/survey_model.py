@@ -3,6 +3,7 @@ from .base_model import base
 from src.utils.slug_generator import generate_slug
 import src.models.conductedSurvey_model as csm
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import JSONB
 
 class SurveyModel(base.Model):
     __tablename__ = "surveys"
@@ -11,6 +12,7 @@ class SurveyModel(base.Model):
         primary_key = True
     )
     slug = base.Column(base.Text, nullable = False, unique = True)
+    questionsIndex = base.Column(JSONB)
     title = base.Column(
         base.Text,
         nullable = False
@@ -38,8 +40,8 @@ class SurveyModel(base.Model):
         'SurveyModel',
         uselist= False
     )
-    preQuestions = relationship(
-        "PreQuestionModel",
+    sections = relationship(
+        "SectionModel",
         back_populates="survey",
         cascade="all, delete-orphan"
     )
@@ -71,7 +73,7 @@ class SurveyModel(base.Model):
         self.conductedSurveys.append(conducted_survey)
         return conducted_survey
     
-    def set_item_order(self, order, **kwargs):
+    def set_item_order(self, order, item):
         if bool(self.order_registry) is False:
             self.order_registry = {}
             self.item_count = 0
@@ -84,8 +86,29 @@ class SurveyModel(base.Model):
                     self.order_registry[question.order] = question
                 self.item_count += 1 
         
-        if order < 1 or order > self.item_count:
-            raise IndexError("You have specified an order which is out of bound from the index of 1 to " + str(self.item_count))
+        if self.item_count == 0:
+            raise IndexError(
+                "There are currently no items in the survey please add an item before setting an order"
+            )
+        elif order < 1 or order > self.item_count:
+            raise IndexError(
+                "You have specified an order which is out of bound from the index of 1 to " + str(self.item_count)
+            )
+        
+        if not (hasattr(item, "order") and hasattr(item, "randomize")):
+            raise AttributeError("item passed into this function must have an order and randomize property")
+        
+        if self.order_registry.get(item.order) is not None:
+            raise ValueError(
+                f"An item in this survey already exists {order}"
+            )
+        else:
+            item.order = order
+            item.randomize = False
+            self.order_registry[order] = item
+            self.item_count += 1
+
+
 
     
 

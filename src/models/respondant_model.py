@@ -9,7 +9,7 @@ class RespondantModel(base.Model):
     __tablename__ = "respondants"
     id = base.Column(base.Integer, primary_key = True)
     classification = base.Column(base.Text, nullable = False)
-    addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
+    addedOn = base.Column(base.DateTime, server_default = func.now())
     slug = base.Column(base.Text, nullable = False, unique = True)
     departmentId = base.Column(
         base.Integer, 

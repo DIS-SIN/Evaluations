@@ -8,7 +8,7 @@ class QuestionModel(base.Model):
     __tablename__ = "questions"
     id = base.Column(base.Integer, primary_key = True)
     order = base.Column(base.Integer)
-    randomize = base.Column(base.Boolean, default = False)
+    randomize = base.Column(base.Boolean, default = True)
     question = base.Column(base.Text, nullable = False)
     options = base.Column(JSONB)
     addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
@@ -26,16 +26,16 @@ class QuestionModel(base.Model):
         back_populates = "questions"
     )
 
-    preQuestionId = base.Column(
+    sectionId = base.Column(
         base.Integer,
         base.ForeignKey(
-            "prequestions.id",
+            "sections.id",
             ondelete="CASCADE",
             onupdate="CASCADE"
         )
     )
-    preQuestions = relationship(
-        "PreQuestionModel",
+    sections = relationship(
+        "SectionModel",
         back_populates="questions"
     )
 
