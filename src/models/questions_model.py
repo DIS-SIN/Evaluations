@@ -3,6 +3,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.sql import func
+from sqlalchemy import ForeignKey
 
 class QuestionModel(base.Model):
     __tablename__ = "questions"
@@ -50,6 +51,20 @@ class QuestionModel(base.Model):
 
     type = relationship(
         "QuestionTypeModel"
+    )
+
+    parentId = base.Column(
+        base.Integer,
+        ForeignKey(
+            "questions.id",
+            ondelete= "CASCADE",
+            onupdate= "CASCADE"
+        )
+    )
+
+    subQuestions = relationship(
+        "QuestionModel",
+        cascade= "all, delete-orphan"
     )
 
     conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')

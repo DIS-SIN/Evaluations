@@ -9,23 +9,41 @@ def load_question_types(app: Flask):
         matrix = QuestionTypeModel(
             type = "matrix"
         )
+        ranking = QuestionTypeModel(
+            type = "ranking"
+        )
+        matrix_row = QuestionTypeModel(
+            type = "matrix_row"
+        )
+        rank_row = QuestionTypeModel(
+            type = "rank_row"
+        )
         multiple_choice = QuestionTypeModel(
             type = "mcq"
         )
-        drop_down = QuestionTypeModel(
-            type = "drop_down"
+        dropdown = QuestionTypeModel(
+            type = "dropdown"
+        )
+        radio = QuestionTypeModel(
+            type = "radio"
         )
         text = QuestionTypeModel(
             type = "text"
         )
         session.add(
-            matrix
+            matrix_row
+        )
+        session.add(
+            rank_row
         )
         session.add(
             multiple_choice
         )
         session.add(
-            drop_down
+            dropdown
+        )
+        session.add(
+            radio
         )
         session.add(
             text

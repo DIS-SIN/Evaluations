@@ -17,19 +17,21 @@
     
     *Section Type Table:
         * Capture all section types
-            * matrix
-            * ranking
-            * group
+            * greeting [DONE]
+            * ending [DONE]
+            * group [DONE]
             
 
     * Question Type Table:
         * capture all the question types
-            * matrix_row
-            * rank_row
-            * mcq
-            * dropdown
-            * radio
-            * text
+            * matrix [DONE]
+            * ranking [DONE]
+            * matrix_row [DONE]
+            * rank_row [DONE]
+            * mcq [DONE]
+            * dropdown [DONE]
+            * radio [DONE]
+            * text [DONE]
 
 * randomization of questions
 * celery processes to calculate sentiment and prepare the single level key value pair for the conducted survey answers  
@@ -37,4 +39,6 @@
 * API helper functions to reduce some bioler plate [DONE]
 * From the classifications. get the base classification and the levels
 * Integrate with sentry [DONE]
-* allow the switching on or off of sentiment anlysis based on the availability of credentials DONE
+* allow the switching on or off of sentiment anlysis based on the availability of credentials [DONE]
+* Integrate celery with application 
+* Deploy with docker

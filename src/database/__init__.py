@@ -28,6 +28,7 @@ def init_db(app: Flask, mode: str):
     from src.models.base_model import base
     base.create_all()
     from .loaders.load_question_types import load_question_types
+    from .loaders.load_section_types import load_section_types
     from .loaders.load_statuses import load_statuses
     from .loaders.load_departments import load_departments
     from .loaders.load_classification import load_classifications
@@ -37,6 +38,7 @@ def init_db(app: Flask, mode: str):
     load_departments(app)
     load_classifications(app)
     load_regions(app)
+    load_section_types(app)
     
 
 def delete_db():
