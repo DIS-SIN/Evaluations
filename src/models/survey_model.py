@@ -90,15 +90,15 @@ class SurveyModel(base.Model):
         return conducted_survey
     
     def set_item_order(self, order, item):
-        if bool(self.order_registry) is False:
+        if not hasattr(self, "order_registry"):
             self.order_registry = {}
             self.item_count = 0
-            for prequestion in self.preQuestions:
-                if prequestion.order is not None:
+            for section in self.sections:
+                if prequestion.order is not None and section.status == "active":
                     self.order_registry[prequestion.order] = prequestion
                 self.item_count += 1
             for question in self.questions:
-                if question.order is not None:
+                if question.order is not None and question.status == "active":
                     self.order_registry[question.order] = question
                 self.item_count += 1 
         

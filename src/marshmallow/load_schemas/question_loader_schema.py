@@ -9,7 +9,8 @@ class QuestionLoaderSchema(Schema):
     order = Integer()
     question = String()
     options = Dict()
-    type = String() 
+    type = String()
+    subQuestions = Nested("self", many=True)
 
     @validates_schema
     def validate_schema(self, data):
@@ -17,7 +18,8 @@ class QuestionLoaderSchema(Schema):
 
             if data.get("question") is None:
                 raise ValidationError(
-                    "you must provide the text for the question to create the question"
+                    "you must provide the text for the question to create the question",
+                    "question"
                 )
 
             if data.get("type") is None:
@@ -25,6 +27,16 @@ class QuestionLoaderSchema(Schema):
                     "you must provide the type of the question",
                     "type"
                 )
+            
+            if (
+                data.get("type") is not None 
+                and (data["type"] == "matrix" or data["type"] == "ranking")
+                and data.get("subQuestions") is None):
+                raise ValidationError(
+                    "you must provide at least one sub question for matrix and ranking type questions",
+                    "subQuestions"
+                )
+
                 
     @post_load
     def load_question(self, data):
@@ -43,11 +55,40 @@ class QuestionLoaderSchema(Schema):
             if type is None:
                 raise ValidationError("The type " + data.get("type") + "is not supported")
             else:
-                question.questionType = type
+                question.type = type
         
         if data.get("options") is not None:
             question.options = data["options"]
         
+        if data.get("subQuestions") is not None:
+            if question.type.type != "matrix" and question.type.type != "ranking":
+                raise ValidationError("Only matrix and ranking type questions may have sub questions")
+            for sub in question.subQuestions:
+                if sub not in data["subQuestions"]:
+                    sub.status = "deactive"
+            for sub in data['subQuestions']:
+                if sub['object'] not in question.subQuestions:
+                    question.subQuestions.append(sub['object'])
+                elif sub.status == "deactive":
+                    sub.status = "active"
+        elif question.type.type == "matrix" or question.type.type == "ranking":
+            for sub in question.subQuestions:
+                if sub.status == "active":
+                    sub.status == "deactive"
+            question.status = "deactive"
+        
+        # handle the case of matrix and ranking questions
+        # the sub questions of these types need the parent questionKey as a prefix
+        if (question.questionKey is None and 
+            question.type.type != "matrix-row" and 
+            question.type.type != "ranking-row"):
+            question.set_questionKey()
+            if question.type.type == "matrix" or question.type.type == "ranking":
+                for sub in question.subQuestions:
+                    if sub.questionKey is None:
+                        sub.set_questionKey(prefix= question.questionKey)
+
+
         deserialized_return = {
             "object":question
         }

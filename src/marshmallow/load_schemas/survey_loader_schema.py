@@ -3,6 +3,7 @@ from marshmallow.fields import Nested, String, Integer, Nested
 from src.database import get_db
 from src.models.survey_model import SurveyModel
 
+
 class SurveyLoaderSchema(Schema):
     id = Integer()
     title = String()
@@ -46,13 +47,16 @@ class SurveyLoaderSchema(Schema):
     def make_survey(self, data):
         session = get_db()
         if data.get("id") is not None:
-            survey = session.query(SurveyModel).filter_by(id = data["id"]).one_or_none()
+            # eager loading of active sections and questions.
+            # note the contains_eager in the options chain 
+            # this is to prevent additional expensive lazy loading queries 
+            survey = session.query(SurveyModel).filter(SurveyModel.id == data["id"]).one_or_none()
             if survey is None:
                 raise ValidationError(
                     f"Could not find survey with the following id: " + str(data["id"])
                 )
         elif data.get("slug") is not None:
-            survey = session.query(SurveyModel).filter_by(slug = data["slug"]).one_or_none()
+            survey = session.query(SurveyModel).filter(SurveyModel.slug == data["slug"]).one_or_none()
             if survey is None:
                 raise ValidationError(
                     f"Could not find survey with the following slug: " + str(data["slug"])
@@ -70,24 +74,34 @@ class SurveyLoaderSchema(Schema):
             survey.language = data['language']
         
         if data.get("questions") is not None:
-            questions = [question["object"] for question in data["questions"]]
+            # get all the question objects from the deserialized question collection
+            questions = [question["object"] for question in data["questions"] 
+                         if question["object"].status == "active"]
+            # loop over these questions
+            # if they are not in the questions collection then add them
+            # else check if there status is deactive and if so turn it to active
             for question in questions:
                 if question not in survey.questions:
                     survey.questions.append(question)
+                elif question.status == "deactive":
+                    question.status = "active"
             
+            # loop over the questions and if they are not the deserialized payload then set them to deactivate
             for survey_question in survey.questions:
-                if survey_question not in questions:
-                    survey.questions.remove(survey_question)
+                if survey_question not in questions and survey_question.status == "active":
+                    survey_question.status = "deactive"
 
             if data.get("sections") is not None:
                 sections = [section["object"] for section in data["sections"]]
                 for section in sections:
                     if section not in survey.sections:
                         survey.sections.append(section)
+                    elif section.status == "deactive":
+                        section.status = "active"
 
                 for survey_section in survey.sections:
-                    if survey_section not in sections:
-                        survey.sections.remove(survey_section)
+                    if survey_section not in sections and survey_section.status == "active":
+                        survey_section.status = "deactive"
                     
                 for section in data["sections"]:
                     if section.get("order") is not None:
@@ -102,11 +116,13 @@ class SurveyLoaderSchema(Schema):
             for section in sections:
                 if section not in survey.sections:
                     survey.sections.append(section)
+                elif section.status == "deactive":
+                    section.status = "active"
 
             for survey_section in survey.sections:
                 if survey_section not in sections:
-                    survey.sections.remove(survey_section)
-            
+                    survey_section.status = "deactive"
+    
             for section in data["sections"]:
                 if section.get("order") is not None:
                     survey.set_item_order(section["order"], section["object"])

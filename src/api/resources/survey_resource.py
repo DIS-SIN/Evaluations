@@ -13,6 +13,21 @@ class SurveyResource(Resource):
     def get(self, id = None, slug = None):
         session = get_db()
         if id is not None:
+           """
+           # query for active sections and questions
+           survey = session.query(SurveyModel).\
+                join(
+                    and_(SurveyModel.questions, QuestionModel.status == "active"), isouter = True).\
+                join(
+                    and_(SurveyModel.sections, SectionModel.status == "active", isouter = True)
+                ).\
+                filter(
+                    SurveyModel.id == data["id"]
+                ).options(
+                    contains_eager(SurveyModel.questions), contains_eager(SurveyModel.sections)
+                ).\
+                one_or_none()
+           """
             dump, status = get_one_row_by_id(
                 session,
                 SurveyModel,

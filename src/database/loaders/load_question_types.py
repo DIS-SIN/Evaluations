@@ -27,6 +27,9 @@ def load_question_types(app: Flask):
         radio = QuestionTypeModel(
             type = "radio"
         )
+        scale = QuestionTypeModel(
+            type = "scale"
+        )
         text = QuestionTypeModel(
             type = "text"
         )
@@ -47,6 +50,9 @@ def load_question_types(app: Flask):
         )
         session.add(
             text
+        )
+        session.add(
+            scale
         )
         session.commit()
         

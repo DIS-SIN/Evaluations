@@ -1,5 +1,5 @@
 from .base_model import base
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -12,6 +12,12 @@ class SectionModel(base.Model):
     body = base.Column(base.Text)
     order = base.Column(base.Integer)
     randomize = base.Column(base.Boolean, default = True)
+    status = base.Column(
+        base.Text, 
+        CheckConstraint("status = 'active' OR status = 'deactive'"),
+        nullable = False,
+        default = "active"
+    )
     questionIndex = base.Column(JSONB)
     addedOn = base.Column(base.DateTime, server_default= func.now())
     updatedOn = base.Column(base.DateTime, server_default=func.now())
@@ -57,12 +63,12 @@ class SectionModel(base.Model):
 
     def set_order(self, order):
         if self.survey is None:
-            raise ValueError("PreQuestion has not yet been added to a survey. This must happen before assigning an order")
+            raise ValueError("section has not yet been added to a survey. This must happen before assigning an order")
         else:
             self.survey.set_item_order(order, self)
     
     def set_item_order(self, order, item):
-        if bool(self.order_registry) is False:
+        if not hasattr(self, "order_registry"):
             self.order_registry = {}
             self.item_count = 0
             for question in self.questions:
