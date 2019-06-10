@@ -83,17 +83,11 @@ class QuestionModel(base.Model):
             self.questionKey = f"{self.type.type}_qid_{self.id}"
     
     def set_item_order(self, order, item):
-        
+        if not hasattr(self, "order_registry"):
+            self.create_order_registry()
+        else:
+            self.recount_active()
         if (self.type is not None and (self.type.type == "matrix" or self.type.type == "ranking")):
-            if not hasattr(self, "order_registry"):
-                self.order_registry = {}
-                self.item_count = 0
-                for sub in self.subQuestions:
-                    if sub.status == "active":
-                        self.item_count += 1
-                        if sub.order is not None:
-                            self.order_registry[sub.order] = sub
-                        
             if self.item_count == 0:
                 raise ValueError(
                     "There are currently no subQuestions in this question " +
@@ -126,9 +120,25 @@ class QuestionModel(base.Model):
                 item.order = order
                 item.randomize = False
                 self.order_registry[order] = item
-                self.item_count += 1
         else:
             raise ValueError("The question must have type ranking or matrix in order to be able to set the order for sub questions")
+        
+        def create_order_registry(self):
+            self.order_registry = {}
+            self.item_count = 0
+            for sub in self.subQuestions:
+                if sub.status == "active":
+                    self.item_count += 1
+                    if sub.order is not None:
+                        self.order_registry[sub.order] = sub
+        
+        def recount_active(self):
+            self.item_count = 0
+            for sub in self.subQuestions:
+                if sub.status == "active":
+                    self.item_count += 1
+                        
+
 
 
 

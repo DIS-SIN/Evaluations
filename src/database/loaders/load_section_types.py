@@ -8,10 +8,10 @@ def load_section_types(app: Flask):
         session = get_db()
 
         greeting = SectionTypeModel(
-            type = "greeting"
+            type = "introduction"
         )
         ending = SectionTypeModel(
-            type = "ending"
+            type = "conclusion"
         )
         group = SectionTypeModel(
             type = "group"

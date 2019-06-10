@@ -72,20 +72,9 @@ class SectionModel(base.Model):
     
     def set_item_order(self, order, item):
         if not hasattr(self, "order_registry"):
-            self.order_registry = {}
-            self.item_count = 0
-            for question in self.questions:
-                if question.status == "active":
-                    self.item_count += 1
-                    if question.order is not None:
-                        self.order_registry[question.order] = question 
-            
-            for section in self.subSections:
-                if section.status == "active":
-                    self.item_count += 1
-                    if question.order is not None:
-                        self.order_registry[section.order] = section 
-
+            self.create_order_registry()
+        else:
+            self.recount_active()
         if self.item_count == 0:
             raise IndexError(
                 "There are currently no items in this section " + 
@@ -120,7 +109,32 @@ class SectionModel(base.Model):
             item.order = order
             item.randomize = False
             self.order_registry[order] = item
-            self.item_count += 1
+         
+        def create_order_registry(self):
+            self.order_registry = {}
+            self.item_count = 0
+            for question in self.questions:
+                if question.status == "active":
+                    self.item_count += 1
+                    if question.order is not None:
+                        self.order_registry[question.order] = question 
+            
+            for section in self.subSections:
+                if section.status == "active":
+                    self.item_count += 1
+                    if question.order is not None:
+                        self.order_registry[section.order] = section 
+        
+        def recount_active(self):
+            self.item_count = 0
+            for question in self.questions:
+                if question.status == "active":
+                    self.item_count += 1
+            for section in self.subSections:
+                if section.status == "active":
+                    self.item_count += 1
+
+
 
         
         

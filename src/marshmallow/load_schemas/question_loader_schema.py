@@ -44,7 +44,10 @@ class QuestionLoaderSchema(Schema):
         if data.get("id") is not None:
             question = session.query(QuestionModel).filter_by(id=data["id"]).one_or_none()
             if question is None:
-                raise ValidationError("The id for the question you have provided does not exist")
+                raise ValidationError(
+                    f"The id {data[id]} for the question you have provided does not exist",
+                    "id"
+                    )
         else:
             question = QuestionModel(session = session)
     
@@ -71,7 +74,17 @@ class QuestionLoaderSchema(Schema):
                     question.subQuestions.append(sub['object'])
                 elif sub.status == "deactive":
                     sub.status = "active"
-        elif question.type.type == "matrix" or question.type.type == "ranking":
+            
+            for sub in data['subQuestions']:
+                if sub.get('order') is not None:
+                    question.set_item_order(sub['order'], sub['object'])
+
+            
+
+        elif (
+            question.type.type == "matrix" 
+            or question.type.type == "ranking"
+            ):
             for sub in question.subQuestions:
                 if sub.status == "active":
                     sub.status == "deactive"

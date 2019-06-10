@@ -75,17 +75,7 @@ class SurveyLoaderSchema(Schema):
         
         if data.get("questions") is not None:
             # get all the question objects from the deserialized question collection
-            questions = [question["object"] for question in data["questions"] 
-                         if question["object"].status == "active"]
-            # loop over these questions
-            # if they are not in the questions collection then add them
-            # else check if there status is deactive and if so turn it to active
-            for question in questions:
-                if question not in survey.questions:
-                    survey.questions.append(question)
-                elif question.status == "deactive":
-                    question.status = "active"
-            
+            questions = [question["object"] for question in data["questions"]]
             # loop over the questions and if they are not the deserialized payload then set them to deactivate
             for survey_question in survey.questions:
                 if survey_question not in questions and survey_question.status == "active":
@@ -93,38 +83,44 @@ class SurveyLoaderSchema(Schema):
 
             if data.get("sections") is not None:
                 sections = [section["object"] for section in data["sections"]]
-                for section in sections:
-                    if section not in survey.sections:
-                        survey.sections.append(section)
-                    elif section.status == "deactive":
-                        section.status = "active"
-
                 for survey_section in survey.sections:
                     if survey_section not in sections and survey_section.status == "active":
                         survey_section.status = "deactive"
-                    
-                for section in data["sections"]:
-                    if section.get("order") is not None:
-                        survey.set_item_order(section["order"], section["object"])
                 
+                for section in data["sections"]:
+                    if not section["object"] in survey.sections:
+                        survey.sections.append(section["object"])
+                    else:
+                        section["object"].status = "active"
+                    if section.get("introduction") is not None:
+                        survey.set_introduction_section(section)
+                    elif section.get("order") is not None:
+                        survey.set_item_order(section["order"], section["object"])
+            
             for question in data["questions"]:
+                if not question["object"] in survey.questions:
+                    survey.questions.append(question["object"])
+                else:
+                    question["object"].status = "active"
                 if question.get("order") is not None:
-                    survey.set_item_order(question["order"], question["object"])
+                    survey.set_item_order(question["order"], question["object"] )
+
+
 
         elif data.get("sections") is not None:
             sections = [section["object"] for section in data["sections"]]
-            for section in sections:
-                if section not in survey.sections:
-                    survey.sections.append(section)
-                elif section.status == "deactive":
-                    section.status = "active"
-
             for survey_section in survey.sections:
-                if survey_section not in sections:
+                if survey_section not in sections and survey_section.status == "active":
                     survey_section.status = "deactive"
-    
+            
             for section in data["sections"]:
-                if section.get("order") is not None:
+                if not section["object"] in survey.sections:
+                    survey.sections.append(section["object"])
+                else:
+                    section["object"].status = "active"
+                if section.get("introduction") is not None:
+                    survey.set_introduction_section(section)
+                elif section.get("order") is not None:
                     survey.set_item_order(section["order"], section["object"])
              
         return survey
