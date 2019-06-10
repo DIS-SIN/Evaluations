@@ -22,13 +22,16 @@ class SectionModel(base.Model):
     addedOn = base.Column(base.DateTime, server_default= func.now())
     updatedOn = base.Column(base.DateTime, server_default=func.now())
 
-    typeId = base.Column(base.Integer, ForeignKey(
+    typeId = base.Column(
+        base.Integer, 
+        ForeignKey(
         "section_types.id",
         ondelete= "SET NULL",
         onupdate= "CASCADE"
-    ))
+       )
+    )
     type = relationship(
-        "SectionTypeModel"
+       "SectionTypeModel"
     )
     parentId = base.Column(base.Integer, ForeignKey(
         "sections.id",
@@ -36,7 +39,7 @@ class SectionModel(base.Model):
         onupdate="CASCADE"
       )
     )
-    subsections = relationship(
+    subSections = relationship(
         "SectionModel",
         passive_deletes = True,
         cascade="all, delete-orphan"
@@ -72,28 +75,44 @@ class SectionModel(base.Model):
             self.order_registry = {}
             self.item_count = 0
             for question in self.questions:
-                if question.order is not None:
-                    self.order_registry[question.order] = question 
-                self.item_count += 1
+                if question.status == "active":
+                    self.item_count += 1
+                    if question.order is not None:
+                        self.order_registry[question.order] = question 
             
-            for section in self.subsections:
-                if section.order is not None:
-                    self.order_registry[section.order] = section
-                self.item_count += 1 
+            for section in self.subSections:
+                if section.status == "active":
+                    self.item_count += 1
+                    if question.order is not None:
+                        self.order_registry[section.order] = section 
 
         if self.item_count == 0:
             raise IndexError(
-                "There are currently no items in this section please add an item before setting an order"
+                "There are currently no items in this section " + 
+                "please add an item before setting an order"
             )
         elif order < 1 or order > self.item_count:
             raise IndexError(
-                "You have specified an order which is out of bound from the index of 1 to " + str(self.item_count)
+                "You have specified an order which is out of bound " +
+                "from the index of 1 to " + str(self.item_count)
             )
         
         if not (hasattr(item, "order") and hasattr(item, "randomize")):
-            raise AttributeError("item passed into this function must have an order and randomize property")
+            raise AttributeError(
+                "item passed into this function must have " +
+                "an order and randomize property"
+            )
+        elif not (item in self.questions or item in self.subSections):
+            raise ValueError(
+                f"The item {item} is not in the questions " +
+                "or the subSections relationship"
+            )
         
-        if self.order_registry.get(item.order) is not None:
+        if item.status != "active":
+            raise ValueError(
+                "Item must be active in order to set the order"
+            )
+        elif self.order_registry.get(item.order) is not None:
             raise ValueError(
                 f"An item in this section already exists in order {order}"
             )

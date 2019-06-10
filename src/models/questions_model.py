@@ -21,13 +21,14 @@ class QuestionModel(base.Model):
     addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
     questionKey = base.Column(base.Text, nullable = False)
     
-    surveyId = base.Column(base.Integer,
-                           base.ForeignKey(
-                               'surveys.id',
-                                ondelete = "CASCADE",
-                                onupdate = "CASCADE"
-                           )
-                        )
+    surveyId = base.Column(
+        base.Integer,
+        ForeignKey(
+            'surveys.id',
+             ondelete = "CASCADE",
+             onupdate = "CASCADE"
+            )
+        )
     survey = relationship(
         'SurveyModel',
         back_populates = "questions"
@@ -35,7 +36,7 @@ class QuestionModel(base.Model):
 
     sectionId = base.Column(
         base.Integer,
-        base.ForeignKey(
+        ForeignKey(
             "sections.id",
             ondelete="CASCADE",
             onupdate="CASCADE"
@@ -48,7 +49,7 @@ class QuestionModel(base.Model):
 
     typeId = base.Column(
         base.Integer,
-        base.ForeignKey(
+        ForeignKey(
             'question_types.id',
             ondelete = "SET NULL",
             onupdate = "CASCADE"
@@ -76,20 +77,58 @@ class QuestionModel(base.Model):
     conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')
 
     def set_questionKey(self, prefix = None):
-        if middle is not None:
+        if prefix is not None:
             self.questionKey = f"{prefix}_sid_{self.id}"
         else:
             self.questionKey = f"{self.type.type}_qid_{self.id}"
     
     def set_item_order(self, order, item):
         
-        if (
-            question.type is not None 
-            and (question.type.type == "matrix" or question.type.type == "ranking")
-        ):
+        if (self.type is not None and (self.type.type == "matrix" or self.type.type == "ranking")):
             if not hasattr(self, "order_registry"):
                 self.order_registry = {}
-                # complete order setting function for matrix-row and ranking-row questions 
+                self.item_count = 0
+                for sub in self.subQuestions:
+                    if sub.status == "active":
+                        self.item_count += 1
+                        if sub.order is not None:
+                            self.order_registry[sub.order] = sub
+                        
+            if self.item_count == 0:
+                raise ValueError(
+                    "There are currently no subQuestions in this question " +
+                    "please add a subQuestion before setting the order"
+                )
+            elif order < 1 or order > self.item_count:
+                raise IndexError(
+                    "You have specified an order which is out of bound " +
+                    "from the index of 1 to " + str(self.item_count)
+             )
+
+            if not (hasattr(self, "order") and hasattr(self, "randomize")):
+                raise AttributeError(
+                    "item passed into this function must have " +
+                    "an order and randomize property")
+            elif not item in self.subQuestions:
+                raise ValueError(
+                    f"The subQuestion {item} is not in the subQuestions relationship"
+                )
+            
+            if item.status != "active":
+                raise ValueError(
+                    "subQuestion must be active in order to set the order"
+                )
+            elif self.order_registry.get(item.order) is not None:
+                raise ValueError(
+                    f"An item in this section already exists in order {order}"
+                )
+            else:
+                item.order = order
+                item.randomize = False
+                self.order_registry[order] = item
+                self.item_count += 1
+        else:
+            raise ValueError("The question must have type ranking or matrix in order to be able to set the order for sub questions")
 
 
 
