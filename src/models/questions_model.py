@@ -76,11 +76,15 @@ class QuestionModel(base.Model):
 
     conductedSurveys = association_proxy('conductedSurveyQuestions', 'conductedSurvey')
 
-    def set_questionKey(self, prefix = None):
-        if prefix is not None:
-            self.questionKey = f"{prefix}_sid_{self.id}"
+    def set_prefix(self, prefix):
+        self.prefix = prefix
+
+    def set_questionKey(self):
+        if hasattr(self, "prefix"):
+            self.questionKey = f"{self.prefix}_sid_{self.id}"
         else:
             self.questionKey = f"{self.type.type}_qid_{self.id}"
+            print(self.questionKey)
     
     def set_item_order(self, order, item):
         if not hasattr(self, "order_registry"):

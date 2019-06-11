@@ -4,10 +4,13 @@ from sqlalchemy.orm.session import Session
 
 def get_db() -> Session:
     from src.models.base_model import base
+    from .events import load_events
     if "scoped_session" not in g:
         g.scoped_session = base.session
     if "session" not in g:
         g.session = g.scoped_session()
+        print("this ran")
+        load_events(g.session)
     return g.session
 
 def close_db(e):

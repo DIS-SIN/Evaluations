@@ -18,12 +18,12 @@ def load_object(schema: Schema, json: dict):
         }, 400
     
     try:
-        print(result)
         session = get_db()
         session.add(result)
         session.commit()
     except SQLAlchemyError as e:
         capture_message(e)
+        raise e
         return {
             "error": "An Internal Service Error has occured"
         }, 500

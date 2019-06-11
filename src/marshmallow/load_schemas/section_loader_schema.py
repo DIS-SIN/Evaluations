@@ -66,12 +66,18 @@ class SectionLoaderSchema(Schema):
                         subSection.status = "deactive"
                 
                 for subSection in data['subSections']:
-                    if subSection['object'] not in section.subSections:
-                        section.subSections.append(subSection['object'])
+                    subSectionObject = subSection["object"] # type: SectionModel
+                    if subSectionObject.type.type == "introduction" or subSectionObject.type.type == "conclusion":
+                        raise ValidationError(
+                            "Cannot have sub sections of type introduction or conclusion",
+                            "subSections"
+                        )
+                    elif subSectionObject not in section.subSections:
+                        section.subSections.append(subSectionObject)
                     else:
-                        subSection["object"].status = "active"
+                        subSectionObject.status = "active"
                     if subSection.get("order") is not None:
-                            section.set_item_order(subSection["order"], subSection["object"])
+                            section.set_item_order(subSectionObject, subSection["object"])
             
             for question in data["questions"]:
                 if question["object"] not in section.questions:
@@ -80,19 +86,25 @@ class SectionLoaderSchema(Schema):
                     question["object"].status = "active"
                 if question.get("order") is not None:
                     section.set_item_order(question["order"], question["object"])
-        elif data.get("subsections") is not None:
+        elif data.get("subSections") is not None:
             subSections = [subSection["object"] for subSection in data['subSections']]
             for subSection in section.subSections:
                 if not subSection in subSections and subSection.status == "active":
                     subSection.status = "deactive"
             
             for subSection in data['subSections']:
-                if subSection['object'] not in section.subSections:
-                    section.subSections.append(subSection['object'])
+                subSectionObject = subSection["object"] # type: SectionModel
+                if subSectionObject.type.type == "introduction" or subSectionObject.type.type == "conclusion":
+                    raise ValidationError(
+                        "Cannot have sub sections of type introduction or conclusion",
+                        "subSections"
+                    )
+                elif subSectionObject not in section.subSections:
+                    section.subSections.append(subSectionObject)
                 else:
-                    subSection["object"].status = "active"
+                   subSectionObject.status = "active"
                 if subSection.get("order") is not None:
-                        section.set_item_order(subSection["order"], subSection["object"])
+                        section.set_item_order(subSectionObject, subSection["object"])
         deserialized_return = {
             "object": section
         }
@@ -101,18 +113,3 @@ class SectionLoaderSchema(Schema):
         if section.type.type == "introduction":
             deserialized_return["introduction"] = True
         return deserialized_return
-
-# TODO 
-# check that the type of section in the subsections are not introduction or conclusion
-
-
-
-
-
-
-
-
-
-
-            
-

@@ -49,8 +49,10 @@ class QuestionLoaderSchema(Schema):
                     "id"
                     )
         else:
-            question = QuestionModel(session = session)
-    
+            question = QuestionModel()
+        
+        if data.get("question") is not None:
+            question.question = data["question"]
         if data.get("type") is not None:
             type = session.query(QuestionTypeModel).filter_by(
                 type=data['type']
@@ -93,13 +95,11 @@ class QuestionLoaderSchema(Schema):
         # handle the case of matrix and ranking questions
         # the sub questions of these types need the parent questionKey as a prefix
         if (question.questionKey is None and 
-            question.type.type != "matrix-row" and 
-            question.type.type != "ranking-row"):
-            question.set_questionKey()
-            if question.type.type == "matrix" or question.type.type == "ranking":
-                for sub in question.subQuestions:
-                    if sub.questionKey is None:
-                        sub.set_questionKey(prefix= question.questionKey)
+            question.type.type == "matrix" and 
+            question.type.type == "ranking"):
+            for sub in question.subQuestions:
+                if sub.questionKey is None:
+                    sub.set_prefix(question.questionKey)
 
 
         deserialized_return = {
