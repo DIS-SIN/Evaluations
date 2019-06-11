@@ -9,7 +9,7 @@ class SurveyLoaderSchema(Schema):
     title = String()
     description = String()
     language = String()
-    sections = Nested("SectionLoaderSchema", many = True")
+    sections = Nested("SectionLoaderSchema", many = True)
     questions = Nested("QuestionLoaderSchema", many=True)
 
     @validates("language")
