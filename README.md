@@ -1,4 +1,4 @@
-# Survista, a light weught CMS 📄 and Search Engine 🔍 for you Survey Data
+# Survista, a Light Weight CMS 📄 and Search Engine 🔍 for your Survey Data
 
 The Canada School of public service is a federal department responsible for teaching and identifying valuable and essential skills for the Government of Canada.
 As such we conduct a wide array of surveys to identify learning satisfaction and where to improve in order to optomize learning delivery in our events and courses.
