@@ -18,9 +18,8 @@ class SectionModel(base.Model):
         nullable = False,
         default = "active"
     )
-    questionIndex = base.Column(JSONB)
     addedOn = base.Column(base.DateTime, server_default= func.now())
-    updatedOn = base.Column(base.DateTime, server_default=func.now())
+    updatedOn = base.Column(base.DateTime, server_default=func.now(), onupdate=func.now())
 
     typeId = base.Column(
         base.Integer, 

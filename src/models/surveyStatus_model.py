@@ -2,7 +2,7 @@ from .base_model import base
 from sqlalchemy.sql import func
 
 class SurveyStatusModel(base.Model):
-    __tablename__ = "survey_status_refrence"
+    __tablename__ = "survey_status_reference"
     id = base.Column(base.Integer, primary_key = True)
     status = base.Column(base.Text, nullable = False)
     description = base.Column(base.Text)

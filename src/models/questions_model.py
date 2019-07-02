@@ -18,9 +18,9 @@ class QuestionModel(base.Model):
     )
     question = base.Column(base.Text, nullable = False)
     options = base.Column(JSONB)
-    addedOn = base.Column(base.DateTime(timezone = True), server_default = func.now())
-    questionKey = base.Column(base.Text, nullable = False)
-    
+    addedOn = base.Column(base.DateTime, server_default = func.now())
+    updatedOn = base.Column(base.DateTime, server_default=func.now(), onupdate=func.now())
+    questionKey = base.Column(base.Text)
     surveyId = base.Column(
         base.Integer,
         ForeignKey(

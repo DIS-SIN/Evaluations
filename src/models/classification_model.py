@@ -2,7 +2,7 @@ from .base_model import base
 from sqlalchemy.sql import func
 
 class ClassificationModel(base.Model):
-    __tablename__ = "classifications_refrence"
+    __tablename__ = "classifications_reference"
     id = base.Column(base.Integer, primary_key =True)
     classification = base.Column(base.Text, nullable = False)
     level = base.Column(base.Integer)

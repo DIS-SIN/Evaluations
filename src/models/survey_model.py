@@ -34,7 +34,7 @@ class SurveyModel(base.Model):
     statusId = base.Column(
         base.Integer,
         ForeignKey(
-            "survey_status_refrence.id",
+            "survey_status_reference.id",
             ondelete= "SET NULL",
             onupdate="CASCADE"
         )

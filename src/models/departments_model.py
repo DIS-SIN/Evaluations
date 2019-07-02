@@ -3,7 +3,7 @@ from .base_model import base
 from sqlalchemy.sql import func
 
 class DepartmentModel(base.Model):
-    __tablename__ = "departments_refrence"
+    __tablename__ = "departments_reference"
     id = base.Column(base.Integer, primary_key =True)
     language = base.Column(base.Text, nullable = False)
     department = base.Column(base.Text, nullable = False)
