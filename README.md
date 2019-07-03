@@ -1,15 +1,16 @@
 # Survista, a Light Weight CMS 📄 and Search Engine 🔍 for your Survey Data
 
-The Canada School of public service is a federal department responsible for teaching and identifying valuable and essential skills for the Government of Canada.
+The Canada School of Public Service is a federal department responsible for teaching and identifying valuable and essential skills for the Government of Canada.
+
 As such we conduct a wide array of surveys to identify learning satisfaction and where to improve in order to optomize learning delivery in our events and courses.
 The current tools used to fulfill this requirement are inefficient and make it very difficult to extract value from qualitative textual data where most of it is.
-As such the Digital Innovation Services as part of the Digital Academy identified a need for an end to end survey solution that would allow analysts to quickly design
-and implement an effective surveys with an automated data pipeline and API. Rudementary NLP such as POS, Sentiment Analysis and Keyword Extraction is built in to allow 
+As such Digital Innovation Services as part of the Digital Academy identified a need for an end-to-end survey solution that would allow analysts to quickly design
+and implement an effective survey with an automated data pipeline and API. Rudementary NLP such as POS, Sentiment Analysis and Keyword Extraction is built in to allow 
 quick filtering and extraction of useful insights from qualitative data. The API allows access to clean machine readable data in the form of JSON allowing the delivery of
-data to third party services, such as Power BI in an automated fashion almost live. This will allow our organization to be data driven and quickly able to action extract 
+data to third party services, such as Power BI in near real-time. This will allow our organization to be data driven and quickly able to extract 
 insight and action from our learners in order to be able to substantially improve our offerings.
 
-This repo encompasses the CMS, pipeline and API side of things. To take a look at the actual survey design tool please have a look at this [repo](https://github.com/DIS-SIN/Evalhalla) 
+This repo encompasses the CMS, pipeline and API. The survey design tool is [here](https://github.com/DIS-SIN/Evalhalla) 
 
 <b> Please note this tool is still in development and has not been released yet </b>
 
@@ -19,27 +20,27 @@ Roll credits 📽️
 
 ## Main technical Stack 
 
-* [Flask](http://flask.pocoo.org/docs/1.0/): Flask is a python micoframwork for building extandable and malluable web services. Since we are prodominently building a data pipeline
-it is perfect for our needs allowing for great flexibility.
+* [Flask](http://flask.pocoo.org/docs/1.0/): Flask is a python microframework for building extendable and malluable web services. Since we are prodominently building a data pipeline
+it is perfect for our needs, allowing for great flexibility.
 
-* [SQLAlchemy](https://www.sqlalchemy.org/): We depend heavy on SQLAlchemy for the effecient abstraction of our database layer. It is an ORM in essence. Instead of having to manage SQL files and the translation of that
-to data objects in python we instead can create class definitions which in turn define our database schema and the relationships between them
+* [SQLAlchemy](https://www.sqlalchemy.org/): We depend heavily on SQLAlchemy for the efficient abstraction of our database layer. It is an ORM in essence. Instead of having to manage SQL files and the translation of that
+to data objects in Python we instead can create class definitions which in turn define our database schema and the relationships between them.
 
-* [Postgres](https://www.postgresql.org/): The worlds most beloved open source database engine and server
+* [Postgres](https://www.postgresql.org/): The worlds most beloved open source database engine and server.
 
 
 ## Use of third party tools
 
 
-* [Sentry](https://sentry.io/welcome/) : An all purpose logging tool with an emphesis on error logging. We are using this in production to help inform us
-of any errors that occur with a rich amount of debugging information to help us mitigate issues not caught in development
+* [Sentry](https://sentry.io/welcome/) : An all purpose logging tool with an emphasis on error logging. We are using this in production to help inform us
+of any errors that occur with a rich amount of debugging information to help us mitigate issues not caught in development.
 
-* [Google Natural Language API](https://cloud.google.com/natural-language/) : What we are using for Sentiment Analysis. While building our own Sentiment Analysis 
-models with domain specific data would probably be better. Our current priority is to build a modular data pipeline and as such are currently outsourcing this step 
+* [Google Natural Language API](https://cloud.google.com/natural-language/) : We use Google's NLP API for Sentiment Analysis. While building our own Sentiment Analysis 
+models with domain specific data would probably be better, our current priority is to build a modular data pipeline and as such are currently outsourcing this step 
 to Google's Natural Language API. What's more Google's API supprts 6 languages. This removes the hassle of having to manage a the life cycle and deployment of multiple Sentiment Analysis
-models until it needs to be addressed
+models until it needs to be addressed.
 
-* [spaCy](https://spacy.io): Industrial grade natural language processing. spaCy built is built with Cython and contains pretrained neural nets that allow for Part of Speech tagging and
+* [spaCy](https://spacy.io): Industrial grade natural language processing. spaCy  is built with Cython and contains pretrained neural nets that allow for Part of Speech tagging and
 normalization of text for keyword extraction with incredible speed.
 
 * [Celery](http://www.celeryproject.org): We are using celery as a task queue to allow us to ansychronously schedule and execute tasks such as munging of data and running textual data through our 
@@ -168,3 +169,4 @@ flask run
 # Other Resources 
 
 This application is under heavy development. We are working to provide documentation on the API as soon as possible. If you have any questions please feel free to open an issue on this repo or contact me at omar.nasr@canada.ca
+
