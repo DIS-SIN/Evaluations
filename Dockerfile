@@ -6,6 +6,11 @@ RUN pip install -r /tmp/requirements.txt
 
 RUN useradd --create-home appuser
 
+ARG APP_SECRET_KEY
+ARG APP_SQLALCHEMY_DATABASE_URI:
+ARG APP_SENTRY_URL
+ARG GOOGLE_APPLICATION_CREDENTIALS
+
 WORKDIR /home/appuser
 
 
