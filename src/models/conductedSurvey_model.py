@@ -12,7 +12,7 @@ class ConductedSurveyModel(base.Model):
     __tablename__ = "conducted_surveys"
     id = base.Column(base.Integer, primary_key = True)
     addedOn = base.Column(base.DateTime, server_default = func.now())
-    updateOn = base.Column(base.DateTime,server_default=func.now(), onupdate= fun.now())
+    updateOn = base.Column(base.DateTime,server_default=func.now(), onupdate= func.now())
     questions = association_proxy("conductedSurveyModelQuestions", 'question')
     slug = base.Column(base.Text, nullable = False, unique = True)
     surveyHash = base.Column(base.Text, nullable = False, unique = True)
